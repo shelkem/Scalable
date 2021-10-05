@@ -10,10 +10,9 @@ import numpy
 import string
 import random
 import argparse
-import tensorflow as tf
 import tflite as tfl
 from tflite_runtime.interpreter import Interpreter
-import tensorflow.keras as keras
+
 
 
 def decode(characters, y):
