@@ -62,7 +62,7 @@ def main():
         img_list = os.listdir(args.captcha_dir)
         img_list.sort()
         print(img_list)
-        for x in os.listdir(args.captcha_dir):
+        for x in os.listdir(img_list):
             # load image and preprocess it
             raw_data = cv2.imread(os.path.join(args.captcha_dir, x))
             rgb_data = cv2.cvtColor(raw_data, cv2.COLOR_BGR2RGB)
