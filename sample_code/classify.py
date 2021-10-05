@@ -46,6 +46,7 @@ def main():
 
     symbols_file = open(args.symbols, 'r')
     captcha_symbols = symbols_file.readline().strip()
+    print(captcha_symbols)
     symbols_file.close()
 
     print("Classifying captchas with symbol set {" + captcha_symbols + "}")
@@ -58,6 +59,9 @@ def main():
         output = interpreter.get_output_details()
         print(output)
 
+        img_list = os.listdir(args.captcha_dir)
+        img_list.sort()
+        print(img_list)
         for x in os.listdir(args.captcha_dir):
             # load image and preprocess it
             raw_data = cv2.imread(os.path.join(args.captcha_dir, x))
