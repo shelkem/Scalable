@@ -71,7 +71,7 @@ def main():
             output_dt = interpreter.get_tensor(output[0]['index'])
             print("decoded")
             # print(decode(captcha_symbols,output_dt))
-            decoded_captcha = ''.join(decode('0123456789kopqrstuvwxyzABCDEFGHIJKLMNOSUVWXZ',
+            decoded_captcha = ''.join(decode('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
                                              interpreter.get_tensor(x["index"])) for x in output)
 
             output_file.write(x + "," + decoded_captcha + "\n")
