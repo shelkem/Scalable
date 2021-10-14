@@ -1,5 +1,5 @@
 import requests as re
 file_list = re.get('http://cs7ns1.scss.tcd.ie?shortname=shelkem')
 print(file_list.text)
-filenames = re.get('https://cs7ns1.scss.tcd.ie.index.php?shortname=shelkem&download=noresume_speed')
+filenames = re.get('http://cs7ns1.scss.tcd.ie.index.php?shortname=shelkem&download=noresume_speed&myfilename=shelkem-challenge-filenames.csv')
 print(filenames.text)
