@@ -10,9 +10,10 @@ import numpy
 import string
 import random
 import argparse
+# import tensorflow as tf
 import tflite as tfl
 from tflite_runtime.interpreter import Interpreter
-
+# import tensorflow.keras as keras
 
 
 def decode(characters, y):
@@ -46,23 +47,20 @@ def main():
 
     symbols_file = open(args.symbols, 'r')
     captcha_symbols = symbols_file.readline().strip()
-    print(captcha_symbols)
     symbols_file.close()
 
     print("Classifying captchas with symbol set {" + captcha_symbols + "}")
     with open(args.output, 'w') as output_file:
         output_file.write("shelkem\n")
-        interpreter = Interpreter('converted_model.tflite')
+        # interpreter = Interpreter('converted_model_new_latest.tflite')
+        interpreter = Interpreter('converted_model_new1.tflite')
         interpreter.allocate_tensors()
         input = interpreter.get_input_details()
         print(input)
         output = interpreter.get_output_details()
         print(output)
 
-        img_list = os.listdir(args.captcha_dir)
-        img_list.sort()
-        print(img_list)
-        for x in img_list:
+        for x in sorted(os.listdir(args.captcha_dir)):
             # load image and preprocess it
             raw_data = cv2.imread(os.path.join(args.captcha_dir, x))
             rgb_data = cv2.cvtColor(raw_data, cv2.COLOR_BGR2RGB)
@@ -75,11 +73,14 @@ def main():
             output_dt = interpreter.get_tensor(output[0]['index'])
             print("decoded")
             # print(decode(captcha_symbols,output_dt))
-            decoded_captcha = ''.join(decode('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+            # decoded_captcha = ''.join(decode('\:|%{}[]()#_- 1234567890ABCDFMPQRSTUVWXYZbecghjknpx',
+            #                                  interpreter.get_tensor(x["index"])) for x in output)
+            decoded_captcha = ''.join(decode('\:%{}[]()#-+ 1234567890ABCDFMPQRSTUVWXYZecghjknp',
                                              interpreter.get_tensor(x["index"])) for x in output)
 
+            decoded_captcha = decoded_captcha.replace(' ','')
             output_file.write(x + "," + decoded_captcha + "\n")
-
+            print(decoded_captcha)
             print('Classified ' + x)
 if __name__ == '__main__':
     main()
